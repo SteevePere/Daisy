@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang = "en-US">
+	<head>
+		<meta charset = "UTF-8">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<title>Employees</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: rgb(174, 177, 183,.3); border-width: 0px;" role="navigation">
+			<a href="" class="navbar-left"><img style="width: 50px; height: 50px;" src="/static/images/HR.jpeg"></a>
+			<a class="navbar-brand" href="/" style="color: black;" >HR</a>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+		</nav>
+		<br>
+		<br>
+		<br>
+		<div>
+			<h1>Employees</h1>
+		</div>
+		<p>
+			<a class="btn btn-info" style="margin-bottom: 10px; float: right" href="/add">Add an employee</a>
+		</p>
+		<br>
+		<br>
+		<div style= "background-color: rgb(227, 240, 247, .3); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 10px;">
+			<table class="table">
+				<tr>
+					<th>Employee Number</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Birth date</th>
+					<th>&nbsp;</th>
+				</tr>
+				{% for employee in employees %}
+				<tr>
+					<td>{{employee.emp_no}}</td>
+					<td>{{employee.first_name}}</td>
+					<td>{{employee.last_name}}</td>
+					<td>{{employee.birth_date}}</td>
+					<td>
+						<a href="">Edit</a>
+						<a href="" style="color: #ff5b5b;">Delete</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</body>

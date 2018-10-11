@@ -1,15 +1,17 @@
 /* myStyle.css */
 body {
   background-image: url("../images/bkg.jpg");
+	margin-top: 5%;
+	max-width: 70%;
+	margin: auto;
 }
+
 h1 {
  color: black;
- text-align: center;
- font: italic 200% fantasy;
+ text-align: left;
+ font: 200%;
 }
-p {
- background-color: #FFFF33;
- color: #333300;
- text-align: right;
- border: 3px groove #FFFF33;
+
+a:hover.navbar-brand {
+	color: grey!important;
 }

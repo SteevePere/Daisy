@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang = "en-US">
+	<head>
+		<meta charset = "UTF-8">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<title>Add an employee</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	</head>
+	{% import "bootstrap/wtf.html" as wtf %}
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: rgb(174, 177, 183,.3); border-width: 0px;" role="navigation">
+			<a href="/" class="navbar-left"><img style="width: 50px; height: 50px;" src="/static/images/HR.jpeg"></a>
+			<a class="navbar-brand" href="/" style="color: black;" >HR</a>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+		</nav>
+		<br>
+		<br>
+		<br>
+		<br>
+		<div>
+			<h1>Add an employee</h1>
+		</div>
+		<br>
+		<div style= "background-color: rgb(227, 240, 247, .3); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 10px;">
+			<form action="{{ url_for('add_emp') }}" method="post" class="form" role="form">
+				<div class="form-group">
+					<label>Employee Number</label>
+					<input class="form-control" id="emp_no" placeholder="Enter employee ID...">
+					<small id="emp_no_small" class="form-text text-muted">Must be unique, e.g. 100001</small>
+				</div>
+				<div class="form-group">
+					<d1>
+						{{ wtf.form_field(form.first_name, class='form-control', placeholder='Enter first name...') }}
+					</d1>
+				</div>
+				<div class="form-group">
+					<d1>
+						{{ wtf.form_field(form.last_name, class='form-control', placeholder='Enter last name...') }}
+					</d1>
+				</div>
+				<div class="form-group">
+					<d1>
+						{{ wtf.form_field(form.birth_date, class='form-control', placeholder='Enter birthdate (yyyy-mm-dd)...') }}
+					</d1>
+				</div>
+			<p><input type=submit value="Create employee" class="btn btn-info" style="margin-bottom: 10px;  float: right"></p>
+			</form>
+		</div>
+		<br>
+	</body>
