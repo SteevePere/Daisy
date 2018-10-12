@@ -15,23 +15,23 @@
 	</head>
 
 	<body>
-		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: rgb(174, 177, 183,.3); border-width: 0px;" role="navigation">
-			<a href="" class="navbar-left"><img style="width: 50px; height: 50px;" src="/static/images/HR.jpeg"></a>
-			<a class="navbar-brand" href="/" style="color: black;" >HR</a>
+		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: rgb(227, 240, 247, .4); border-width: 0px;" role="navigation">
+			<a href="/" class="navbar-left"><img style="width: 40px; height: 40px; margin: 5px 0px 5px 15px;" src="/static/images/HR.png"></a>
+			<a class="navbar-brand" href="/" style="color: black;" >HR DEPARTMENT</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
 		</nav>
 		<br>
 		<br>
 		<br>
 		<div>
-			<h1>Employees</h1>
+			<h1>Employee overview</h1>
 		</div>
 		<p>
-			<a class="btn btn-info" style="margin-bottom: 10px; float: right" href="/add">Add an employee</a>
+			<a class="btn btn-info" style="margin-bottom: 10px; float: right" href="/add">New employee</a>
 		</p>
 		<br>
 		<br>
-		<div style= "background-color: rgb(227, 240, 247, .3); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 10px;">
+		<div style= "background-color: rgb(227, 240, 247, .4); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 10px;">
 			<table class="table">
 				<tr>
 					<th>Employee Number</th>
@@ -44,9 +44,15 @@
 					<td>{{employee.emp_no}}</td>
 					<td>{{employee.first_name}}</td>
 					<td>{{employee.last_name}}</td>
-					<td>
-						<a href="">Edit</a>
-						<a href="" style="color: #ff5b5b;">Delete</a>
+					<td width="20px">
+						<form action="{{ url_for('edit', firstname=employee.first_name, lastname=employee.last_name) }}" method="post">
+						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" />
+						</form>
+					</td>
+					<td width="20px">
+						<form action="{{ url_for('confirm', empno=employee.emp_no) }}" method="post">
+						<input type="image" name="submit" src="/static/images/exit.png" style="width:15px; height:15px;" alt="Delete" />
+    				</form>
 					</td>
 				</tr>
 				{% endfor %}
