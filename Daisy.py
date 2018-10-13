@@ -55,11 +55,6 @@ def add():
 		return redirect(url_for('home'))
 	return render_template('add.html', form=form),200
 
-@app.route('/confirm/<empno>', methods=['GET', 'POST'])
-
-def confirm(empno):
-	return render_template('confirm.html', empno=empno),200
-
 @app.route('/delete/<empno>', methods=['GET', 'POST'])
 
 def delete(empno):
@@ -68,19 +63,21 @@ def delete(empno):
 		conn.commit()
 	return redirect('/')
 
-@app.route('/edit/<firstname>/<lastname>', methods=['GET', 'POST'])
+@app.route('/edit/<empno>/<firstname>/<lastname>', methods=['GET', 'POST'])
 
-def edit(firstname,lastname):
+def edit(empno,firstname,lastname):
 	form = RegistrationForm(request.form)
-	# if (request.method == 'POST'):
-	# 	newfirstname = str(request.form['first_name'])
-	# 	newlastname = str(request.form['last_name'])
-	# 	oldlastname = lastname
-	# 	oldfirstname = firstname
-	# 	cursor.execute("UPDATE employees SET first_name = (%s), last_name = (%s) WHERE first_name = (%s) AND last_name = (%s))",(newfirstname, newlastname, oldfirstname, oldlastname))
-	# 	conn.commit()
-	# 	return redirect(url_for('home'))
-	return render_template('edit.html', firstname=firstname, lastname=lastname, form=form),200
+	return render_template('edit.html', empno=empno, firstname=firstname, lastname=lastname, form=form),200
+
+@app.route('/modify/<empno>', methods=['GET', 'POST'])
+
+def modify(empno):
+	newfirstname = str(request.form['first_name'])
+	newlastname = str(request.form['last_name'])
+	empno=empno
+	cursor.execute("UPDATE employees SET first_name = (%s), last_name = (%s) WHERE emp_no = (%s)",(newfirstname, newlastname, empno))
+	conn.commit()
+	return redirect(url_for('home'))
 
 #ERROR ROUTE
 @app.errorhandler(404)

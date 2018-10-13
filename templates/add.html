@@ -17,19 +17,24 @@
 	{% import "bootstrap/wtf.html" as wtf %}
 
 	<body>
+
 		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: rgb(227, 240, 247, .4); border-width: 0px;" role="navigation">
 			<a href="/" class="navbar-left"><img style="width: 40px; height: 40px; margin: 5px 0px 5px 15px;" src="/static/images/HR.png"></a>
 			<a class="navbar-brand" href="/" style="color: black;" >HR DEPARTMENT</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
 		</nav>
+
 		<br>
 		<br>
 		<br>
 		<br>
+
 		<div>
 			<h1>Add an employee</h1>
 		</div>
+
 		<br>
+
 		<div style= "background-color: rgb(227, 240, 247, .4); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 10px;">
 			<form action="{{ url_for('add') }}" method="post" class="form" role="form">
 				<div class="form-group">
@@ -43,7 +48,8 @@
 					</d1>
 				</div>
 			</div>
+			<p><input type=button onclick="window.location='/';" value="Cancel" class="btn btn-warning pull-right" style="margin-bottom: 0px; margin-top: 30px; margin-left: 5px;"></p>
 			<p><input type=submit value="Create employee" class="btn btn-info pull-right" style="margin-bottom: 10px; margin-top: 20px;"></p>
 			</form>
-		<br>
+
 	</body>

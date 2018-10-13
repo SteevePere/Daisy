@@ -15,23 +15,31 @@
 	</head>
 
 	<body>
+
 		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: rgb(227, 240, 247, .4); border-width: 0px;" role="navigation">
 			<a href="/" class="navbar-left"><img style="width: 40px; height: 40px; margin: 5px 0px 5px 15px;" src="/static/images/HR.png"></a>
 			<a class="navbar-brand" href="/" style="color: black;" >HR DEPARTMENT</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
 		</nav>
+
 		<br>
 		<br>
 		<br>
+
 		<div>
 			<h1>Employee overview</h1>
 		</div>
+
+		<br>
+
 		<p>
 			<a class="btn btn-info" style="margin-bottom: 10px; float: right" href="/add">New employee</a>
 		</p>
+
 		<br>
 		<br>
-		<div style= "background-color: rgb(227, 240, 247, .4); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 10px;">
+
+		<div style= "background-color: rgb(227, 240, 247, .4); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 0px;">
 			<table class="table">
 				<tr>
 					<th>Employee Number</th>
@@ -39,23 +47,41 @@
 					<th>Last Name</th>
 					<th>&nbsp;</th>
 				</tr>
+
 				{% for employee in employees %}
 				<tr>
 					<td>{{employee.emp_no}}</td>
 					<td>{{employee.first_name}}</td>
 					<td>{{employee.last_name}}</td>
 					<td width="20px">
-						<form action="{{ url_for('edit', firstname=employee.first_name, lastname=employee.last_name) }}" method="post">
+						<form action="{{ url_for('edit', empno=employee.emp_no, firstname=employee.first_name, lastname=employee.last_name) }}" method="post">
 						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" />
 						</form>
 					</td>
 					<td width="20px">
-						<form action="{{ url_for('confirm', empno=employee.emp_no) }}" method="post">
-						<input type="image" name="submit" src="/static/images/exit.png" style="width:15px; height:15px;" alt="Delete" />
-    				</form>
+						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#{{employee.emp_no}}" name="submit" src="/static/images/exit.png" style="width:15px; height:15px;" alt="Delete" />
 					</td>
 				</tr>
+				<!-- Modal -->
+				<div class="modal fade" id="{{employee.emp_no}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content" style="margin-top: 200px;">
+				      <div class="modal-body">
+								<h2>Are you sure that you wish to delete employee {{employee.emp_no}}?</h2>
+				      </div>
+				      <div class="modal-footer">
+								<form action="{{ url_for('delete', empno=employee.emp_no) }}" method="post">
+								<p><input type="submit" value="Delete" class="btn btn-danger" style="float: right; margin-left: 5px; margin-top: 30px;"></p>
+								</form>
+								<p><input type="button" data-dismiss="modal" value="Cancel" class="btn btn-warning" style="float: right; margin-top: 20px"></p>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<!--Endof Modal -->
 				{% endfor %}
+
 			</table>
 		</div>
+
 	</body>
