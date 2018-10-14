@@ -1,4 +1,5 @@
-#IMPORTS
+# -- IMPORTS --
+
 from flask import Flask, request, jsonify, redirect, url_for
 from flaskext.mysql import MySQL
 from flask import render_template
@@ -8,12 +9,14 @@ from wtforms.validators import (DataRequired,Length)
 from flask_bootstrap import Bootstrap
 import datetime
 
-#INIT OBJECTS
+# -- INIT OBJECTS --
+
 mysql = MySQL()
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
-#APP CONFIG
+# -- APP CONFIG --
+
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'Makaveli'
 app.config['MYSQL_DATABASE_DB'] = 'Daisy'
@@ -21,14 +24,17 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['SECRET_KEY'] = 'top secret key'
 mysql.init_app(app)
 
-#MYSQL OBJECTS
+# -- MYSQL OBJECTS --
+
 conn = mysql.connect()
 cursor = conn.cursor()
 
-#CUSTOM CLASSES
+# -- CUSTOM CLASSES --
+
+#EMPLOYEE FORM
 class RegistrationForm(FlaskForm):
-	first_name = StringField('First Name', validators=[DataRequired()])
-	last_name = StringField('Last Name', validators=[DataRequired(), Length(min=1, max=25)])
+	first_name = StringField('First Name', validators=[DataRequired(), Length(min=1, max=15, message="Max length 15 characters")])
+	last_name = StringField('Last Name', validators=[DataRequired(), Length(min=1, max=15, message="Max length 15 characters")])
 
 # -- ROUTES --
 
@@ -114,6 +120,7 @@ def modify(empno):
 def not_found(error):
 	return jsonify({'code':404,'message': 'Not Found'}),404
 
-#APP ENGINE
+# -- APP ENGINE --
+
 if __name__ == '__main__':
 	app.run('0.0.0.0',port='5000')
