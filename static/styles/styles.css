@@ -13,11 +13,27 @@ h1 {
 }
 
 h2 {
- color: black;
+ color: grey;
  text-align: center;
  font-size: 150%;
 }
 
 a:hover.navbar-brand {
 	color: grey!important;
+}
+
+.table {
+  margin-bottom: 0px!important;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	border-top: 0px solid red!important;
+}
+
+tr:nth-of-type(odd) {
+	background-color:rgb(227, 240, 247, .1);
+}
+
+.modal-footer {
+	border-top:0px solid #e5e5e5!important;
 }
