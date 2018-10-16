@@ -18,31 +18,39 @@
 
 		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: rgb(227, 240, 247, .4); border-width: 0px;" role="navigation">
 			<a href="/" class="navbar-left"><img style="width: 40px; height: 40px; margin: 5px 0px 5px 15px;" src="/static/images/HR.png"></a>
-			<a class="navbar-brand" href="/" style="color: black;" >HR DEPARTMENT</a>
+			<a class="navbar-brand" href="/" style="color: #383737;" >HR DEPARTMENT</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
 		</nav>
 
 		<br>
 		<br>
 		<br>
-
+		{% if search %}
+		<div>
+			<h1>Search results</h1>
+		</div>
+		{% else %}
 		<div>
 			<h1>Employees overview</h1>
 		</div>
+		{% endif %}
 
 		<br>
 		<br>
 
 		<form action="{{ url_for('search') }}" method="post">
   		<div class="row">
-    		<div class="col-xs-6 col-md-4" style="float: right;">
+    		<div class="col-xs-6 col-md-4" style="float: right; width: 45%;">
       		<div class="input-group">
-        		<input type="text" required class="form-control" placeholder="Search employees" name= "search" id="txtSearch"/>
+        		<input type="text" required class="form-control" style="border:1px solid white;" placeholder="Search employees" name= "search" id="txtSearch"/>
         			<div class="input-group-btn">
-          			<button class="btn btn-primary" type="submit">
+          			<button class="btn btn-light" type="submit">
             			<span class="glyphicon glyphicon-search"></span>
           			</button>
 								<a class="btn btn-info" style="" href="/add">New employee</a>
+								{% if search %}
+										<a class="btn btn-warning" href="/">All employees</a>
+								{% endif %}
         			</div>
       		</div>
     		</div>
@@ -94,12 +102,8 @@
 				<!--Endof Modal -->
 				{% endfor %}
 			</table>
-			{% else %}
-			<h2>{{message}}</h2>
-				<div class="text-center">
-					<a class="btn btn-info" style="margin-top: 15px;" href="/">Back to list</a>
-				</div>
 			{% endif %}
+			<h2>{{message}}</h2>
 		</div>
 
 	</body>

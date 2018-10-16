@@ -59,6 +59,7 @@ def home():
 def search():
 	employees = []
 	message = ""
+	search = True
 	no_match = False
 	input = str(request.form.get("search",""))
 	input = '%' + input + '%'
@@ -71,7 +72,7 @@ def search():
 	if (employees == []):
 		no_match = True
 		message = "No employees match your search!"
-	return render_template('index.html', employees = employees, message = message, no_match = no_match),200
+	return render_template('index.html', employees = employees, message = message, search = search, no_match = no_match),200
 
 #ADD ENTRY
 @app.route('/add', methods=['GET', 'POST'])

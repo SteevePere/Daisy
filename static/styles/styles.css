@@ -1,13 +1,13 @@
 /* myStyle.css */
 body {
-  background-image: url("../images/bkg.jpg");
+  background-image: url("../images/bkg3.jpg");
 	margin-top: 5%;
 	max-width: 65%;
 	margin: auto;
 }
 
 h1 {
- color: black;
+ color: #383737;
  text-align: left;
  font-size: 250%;
 }
