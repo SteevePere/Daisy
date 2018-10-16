@@ -3,6 +3,7 @@ body {
   background-image: url("../images/bkg3.jpg");
 	margin-top: 5%;
 	max-width: 65%;
+	background-size:cover;
 	margin: auto;
 }
 
