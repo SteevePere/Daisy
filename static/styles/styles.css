@@ -3,8 +3,11 @@ body {
   background-image: url("../images/bkg3.jpg");
 	margin-top: 5%;
 	max-width: 65%;
-	background-size:cover;
 	margin: auto;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	background-size: cover;
 }
 
 h1 {
@@ -14,7 +17,7 @@ h1 {
 }
 
 h2 {
- color: grey;
+ color: #383737;
  text-align: center;
  font-size: 150%;
 }
@@ -32,7 +35,7 @@ a:hover.navbar-brand {
 }
 
 tr:nth-of-type(odd) {
-	background-color:rgb(227, 240, 247, .1);
+	background-color:rgb(227, 240, 247, .9);
 }
 
 .modal-footer {
