@@ -4,8 +4,8 @@ from flask import Flask, request, jsonify, redirect, url_for
 from flaskext.mysql import MySQL
 from flask import render_template
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, DateField, StringField, validators
-from wtforms.validators import (DataRequired,Length)
+from wtforms import IntegerField, DateField, StringField, RadioField, validators
+from wtforms.validators import (DataRequired,InputRequired,Length)
 from flask_bootstrap import Bootstrap
 import datetime
 
@@ -44,11 +44,15 @@ class RegistrationForm(FlaskForm):
 
 def home():
 	all_employees = []
-	cursor.execute("SELECT first_name, last_name, emp_no FROM employees")
+	cursor.execute("SELECT first_name, last_name, emp_no, gender FROM employees")
 	rows = cursor.fetchall()
 	columns = [desc[0] for desc in cursor.description]
 	for row in rows:
 		row = dict(zip(columns,row))
+		if (row["gender"] == "M"):
+			row["gender"] = "Mr."
+		else:
+			(row["gender"]) = "Ms."
 		all_employees.append(row)
 	if(request.path == '/list'): #REST
 			return jsonify({'code':200, 'message':'OK', 'Employees':all_employees}),200
@@ -63,11 +67,15 @@ def search():
 	no_match = False
 	input = str(request.form.get("search",""))
 	input = '%' + input + '%'
-	cursor.execute("SELECT first_name, last_name, emp_no FROM employees WHERE (last_name LIKE (%s) OR first_name LIKE (%s) OR emp_no LIKE (%s))",(input, input, input))
+	cursor.execute("SELECT first_name, last_name, emp_no, gender FROM employees WHERE (last_name LIKE (%s) OR first_name LIKE (%s) OR emp_no LIKE (%s))",(input, input, input))
 	rows = cursor.fetchall()
 	columns = [desc[0] for desc in cursor.description]
 	for row in rows:
 		row = dict(zip(columns,row))
+		if (row["gender"] == "M"):
+			row["gender"] = "Mr."
+		else:
+			(row["gender"]) = "Ms."
 		employees.append(row)
 	if (employees == []):
 		no_match = True
@@ -80,12 +88,13 @@ def search():
 def add():
 	form = RegistrationForm(request.form)
 	if (request.method == 'POST'):
+		gender = str(request.form['gender'])
 		firstname = str(request.form['first_name'])
 		lastname = str(request.form['last_name'])
 		cursor.execute("SELECT MAX(emp_no) FROM employees")
 		top_emp = cursor.fetchall()
 		empno = top_emp[0][0] + 1
-		cursor.execute("INSERT INTO employees (emp_no, first_name, last_name) VALUES ((%s), (%s), (%s))",(empno, firstname, lastname))
+		cursor.execute("INSERT INTO employees (emp_no, gender, first_name, last_name) VALUES ((%s), (%s), (%s), (%s))",(empno, gender, firstname, lastname))
 		conn.commit()
 		return redirect(url_for('home'))
 	return render_template('add.html', form=form),200
@@ -117,11 +126,11 @@ def delete(empno):
 	return redirect('/')
 
 #EDIT PAGE
-@app.route('/edit/<empno>/<firstname>/<lastname>', methods=['GET', 'POST'])
+@app.route('/edit/<empno>/<gender>/<firstname>/<lastname>', methods=['GET', 'POST'])
 
-def edit(empno,firstname,lastname):
+def edit(empno,gender,firstname,lastname):
 	form = RegistrationForm(request.form)
-	return render_template('edit.html', empno=empno, firstname=firstname, lastname=lastname, form=form),200
+	return render_template('edit.html', empno=empno, gender=gender, firstname=firstname, lastname=lastname, form=form),200
 
 #MODIFY ENTRY
 @app.route('/modify/<empno>', methods=['GET', 'POST'])
@@ -129,8 +138,9 @@ def edit(empno,firstname,lastname):
 def modify(empno):
 	newfirstname = str(request.form['first_name'])
 	newlastname = str(request.form['last_name'])
+	newgender = str(request.form['gender'])
 	empno=empno
-	cursor.execute("UPDATE employees SET first_name = (%s), last_name = (%s) WHERE emp_no = (%s)",(newfirstname, newlastname, empno))
+	cursor.execute("UPDATE employees SET gender = (%s), first_name = (%s), last_name = (%s) WHERE emp_no = (%s)",(newgender, newfirstname, newlastname, empno))
 	conn.commit()
 	return redirect(url_for('home'))
 

@@ -65,6 +65,7 @@
 			<table class="table" cellspacing="0" cellpadding="0">
 				<tr>
 					<th>Employee Number</th>
+					<th>Title</th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>&nbsp;</th>
@@ -73,10 +74,11 @@
 				{% for employee in employees %}
 				<tr>
 					<td>{{employee.emp_no}}</td>
+					<td>{{employee.gender}}</td>
 					<td>{{employee.first_name}}</td>
 					<td>{{employee.last_name}}</td>
 					<td width="20px">
-						<form action="{{ url_for('edit', empno=employee.emp_no, firstname=employee.first_name, lastname=employee.last_name) }}" method="post">
+						<form action="{{ url_for('edit', empno=employee.emp_no, gender=employee.gender, firstname=employee.first_name, lastname=employee.last_name) }}" method="post">
 						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" />
 						</form>
 					</td>
@@ -89,7 +91,7 @@
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content" style="margin-top: 200px;">
 				      <div class="modal-body">
-								<h2>Are you sure that you wish to delete employee {{employee.emp_no}}?</h2>
+								<h2>Are you sure that you wish to delete {{employee.gender}} {{employee.first_name}} {{employee.last_name}} (employee {{employee.emp_no}})?</h2>
 				      </div>
 				      <div class="modal-footer">
 								<form action="{{ url_for('delete', empno=employee.emp_no) }}" method="post">
