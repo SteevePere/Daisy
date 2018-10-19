@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import IntegerField, DateField, StringField, RadioField, validators
 from wtforms.validators import (DataRequired,InputRequired,Length)
 from flask_bootstrap import Bootstrap
-import datetime
+import datetime, time
 
 # -- INIT OBJECTS --
 
@@ -44,7 +44,7 @@ class RegistrationForm(FlaskForm):
 
 def home():
 	all_employees = []
-	cursor.execute("SELECT first_name, last_name, emp_no, gender FROM employees")
+	cursor.execute("SELECT first_name, last_name, emp_no, gender, birth_date FROM employees")
 	rows = cursor.fetchall()
 	columns = [desc[0] for desc in cursor.description]
 	for row in rows:
@@ -91,10 +91,11 @@ def add():
 		gender = str(request.form['gender'])
 		firstname = str(request.form['first_name'])
 		lastname = str(request.form['last_name'])
+		b_date = str(request.form['birth_date'])
 		cursor.execute("SELECT MAX(emp_no) FROM employees")
 		top_emp = cursor.fetchall()
 		empno = top_emp[0][0] + 1
-		cursor.execute("INSERT INTO employees (emp_no, gender, first_name, last_name) VALUES ((%s), (%s), (%s), (%s))",(empno, gender, firstname, lastname))
+		cursor.execute("INSERT INTO employees (emp_no, gender, first_name, last_name, birth_date) VALUES ((%s), (%s), (%s), (%s), (%s))",(empno, gender, firstname, lastname, b_date))
 		conn.commit()
 		return redirect(url_for('home'))
 	return render_template('add.html', form=form),200

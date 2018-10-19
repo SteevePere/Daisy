@@ -68,6 +68,7 @@
 					<th>Title</th>
 					<th>First Name</th>
 					<th>Last Name</th>
+					<th>Birth Date</th>
 					<th>&nbsp;</th>
 					<th>&nbsp;</th>
 				</tr>
@@ -77,6 +78,7 @@
 					<td>{{employee.gender}}</td>
 					<td>{{employee.first_name}}</td>
 					<td>{{employee.last_name}}</td>
+					<td>{{employee.birth_date}}</td>
 					<td width="20px">
 						<form action="{{ url_for('edit', empno=employee.emp_no, gender=employee.gender, firstname=employee.first_name, lastname=employee.last_name) }}" method="post">
 						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" />

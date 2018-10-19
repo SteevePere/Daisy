@@ -57,12 +57,14 @@
 						<label>Gender</label>
 						<br>
 						<d1>
-							<label class="checkbox-inline">
+							<div class="btn-group-toggle" data-toggle="buttons">
+							<label class="btn btn-success {% if gender == "Ms." %} active {% endif %}" style="width: 70px;">
 								<input type="radio" name="gender" value="F" {% if gender == "Ms." %} checked {% endif %}> Female
 							</label>
-								<label class="checkbox-inline">
-								<input type="radio" name="gender" required value="M" {% if gender == "Mr." %} checked {% endif %}> Male
+							<label class="btn btn-success {% if gender == "Mr." %} active {% endif %}" style="width: 70px;">
+								<input type="radio" name="gender" value="M"> Male
 							</label>
+						</div>
 						</d1>
 					</div>
 				</div>

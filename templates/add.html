@@ -57,12 +57,22 @@
 					<label>Gender</label>
 					<br>
 					<d1>
-						<label class="checkbox-inline">
+						<div class="btn-group-toggle" data-toggle="buttons">
+						<label class="btn btn-success" style="width: 70px;">
 							<input type="radio" name="gender" value="F"> Female
 						</label>
-							<label class="checkbox-inline">
+						<label class="btn btn-success" style="width: 70px;">
 							<input type="radio" name="gender" required value="M"> Male
 						</label>
+					</div>
+					</d1>
+				</div>
+				<div class="form-group">
+					<label>Birth date</label>
+					<br>
+					<d1>
+							<input required type="text" class="form-control" placeholder="mm/dd/yyyy" onfocus="(this.type='date')" style="width:200px;" name="birth_date"/>
+							<!-- <input class="form-control" style="width:200px; color:#999" required type="date" name="birth_date"> -->
 					</d1>
 				</div>
 			</div>
