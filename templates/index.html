@@ -80,6 +80,9 @@
 					<td>{{employee.last_name}}</td>
 					<td>{{employee.birth_date}}</td>
 					<td width="20px">
+						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#{{employee.emp_no}}" name="quickview" src="/static/images/quickview.png" style="width:15px; height:15px;" alt="Quick view" />
+					</td>
+					<td width="20px">
 						<form action="{{ url_for('edit', empno=employee.emp_no, gender=employee.gender, firstname=employee.first_name, lastname=employee.last_name, bdate=employee.birth_date) }}" method="post">
 						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" />
 						</form>
