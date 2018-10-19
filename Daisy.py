@@ -67,7 +67,7 @@ def search():
 	no_match = False
 	input = str(request.form.get("search",""))
 	input = '%' + input + '%'
-	cursor.execute("SELECT first_name, last_name, emp_no, gender FROM employees WHERE (last_name LIKE (%s) OR first_name LIKE (%s) OR emp_no LIKE (%s))",(input, input, input))
+	cursor.execute("SELECT first_name, last_name, emp_no, gender, birth_date FROM employees WHERE (last_name LIKE (%s) OR first_name LIKE (%s) OR emp_no LIKE (%s) OR birth_date LIKE (%s))",(input, input, input, input))
 	rows = cursor.fetchall()
 	columns = [desc[0] for desc in cursor.description]
 	for row in rows:
@@ -127,11 +127,11 @@ def delete(empno):
 	return redirect('/')
 
 #EDIT PAGE
-@app.route('/edit/<empno>/<gender>/<firstname>/<lastname>', methods=['GET', 'POST'])
+@app.route('/edit/<empno>/<gender>/<firstname>/<lastname>/<bdate>', methods=['GET', 'POST'])
 
-def edit(empno,gender,firstname,lastname):
+def edit(empno,gender,firstname,lastname,bdate):
 	form = RegistrationForm(request.form)
-	return render_template('edit.html', empno=empno, gender=gender, firstname=firstname, lastname=lastname, form=form),200
+	return render_template('edit.html', empno=empno, gender=gender, firstname=firstname, lastname=lastname, b_date=bdate, form=form),200
 
 #MODIFY ENTRY
 @app.route('/modify/<empno>', methods=['GET', 'POST'])
@@ -140,8 +140,9 @@ def modify(empno):
 	newfirstname = str(request.form['first_name'])
 	newlastname = str(request.form['last_name'])
 	newgender = str(request.form['gender'])
+	newbdate = str(request.form['birth_date'])
 	empno=empno
-	cursor.execute("UPDATE employees SET gender = (%s), first_name = (%s), last_name = (%s) WHERE emp_no = (%s)",(newgender, newfirstname, newlastname, empno))
+	cursor.execute("UPDATE employees SET gender = (%s), first_name = (%s), last_name = (%s), birth_date = (%s) WHERE emp_no = (%s)",(newgender, newfirstname, newlastname, newbdate, empno))
 	conn.commit()
 	return redirect(url_for('home'))
 
