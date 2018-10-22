@@ -16,9 +16,10 @@
 
 	<body>
 
-		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: rgb(227, 240, 247, .4); border-width: 0px;" role="navigation">
+		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-image: linear-gradient(to right, #bac9d1, #cdd6dd, #dfe3e9, #ffffff, #ffffff); border-width: 0px; height:50px;" role="navigation">
 			<a href="/" class="navbar-left"><img style="width: 40px; height: 40px; margin: 5px 0px 5px 15px;" src="/static/images/HR.png"></a>
 			<a class="navbar-brand" href="/" style="color: #282828;" >HR DEPARTMENT</a>
+			<a href="/"><img style="float: right; height: 50px; box-shadow: -50px 0 8px 8px white inset;" src="/static/images/emps.png"></a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
 		</nav>
 
@@ -61,14 +62,14 @@
 		<br>
 
 		{% if not no_match %}
-		<div style= "background-color: rgb(227, 240, 247, .4); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 0px;">
+		<div style= "background-color: rgb(227, 240, 247, .5); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 0px;">
 			<table class="table" cellspacing="0" cellpadding="0">
 				<tr>
 					<th>Employee Number</th>
 					<th>Title</th>
 					<th>First Name</th>
 					<th>Last Name</th>
-					<th>Birth Date</th>
+					<th>&nbsp;</th>
 					<th>&nbsp;</th>
 					<th>&nbsp;</th>
 				</tr>
@@ -78,24 +79,25 @@
 					<td>{{employee.gender}}</td>
 					<td>{{employee.first_name}}</td>
 					<td>{{employee.last_name}}</td>
-					<td>{{employee.birth_date}}</td>
 					<td width="20px">
-						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#{{employee.emp_no}}" name="quickview" src="/static/images/quickview.png" style="width:15px; height:15px;" alt="Quick view" />
+						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#show{{employee.emp_no}}" name="quickview" src="/static/images/quickview.png" style="width:15px; height:15px;" alt="Quick view" title="View Profile"/>
 					</td>
 					<td width="20px">
 						<form action="{{ url_for('edit', empno=employee.emp_no, gender=employee.gender, firstname=employee.first_name, lastname=employee.last_name, bdate=employee.birth_date) }}" method="post">
-						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" />
+						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" title="Edit Profile"/>
 						</form>
 					</td>
 					<td width="20px">
-						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#{{employee.emp_no}}" name="submit" src="/static/images/exit.png" style="width:15px; height:15px;" alt="Delete" />
+						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#delete{{employee.emp_no}}" name="submit" src="/static/images/exit.png" style="width:15px; height:15px;" alt="Delete" title="Delete Employee"/>
 					</td>
 				</tr>
-				<!-- Modal -->
-				<div class="modal fade" id="{{employee.emp_no}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<!--Delete confirmation Modal -->
+				<div class="modal fade" id="delete{{employee.emp_no}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content" style="margin-top: 200px;">
 				      <div class="modal-body">
+								<center><img style="height: 50px; width: 50px;" src="/static/images/exclamation_mark.png"><center>
+								<br>
 								<h2>Are you sure that you wish to delete {{employee.gender}} {{employee.first_name}} {{employee.last_name}} (employee {{employee.emp_no}})?</h2>
 				      </div>
 				      <div class="modal-footer">
@@ -107,7 +109,34 @@
 				    </div>
 				  </div>
 				</div>
-				<!--Endof Modal -->
+				<!--End of Delete confirmation Modal -->
+				<!--Show Profile Modal -->
+				<div class="modal fade" id="show{{employee.emp_no}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content" style="margin-top: 200px;">
+							<div class="modal-header">
+							<button data-dismiss="modal" class="close">×</button>
+							</div>
+				      <div class="modal-body">
+								<center><img style="height: 100px; width: 100px;" {% if employee.gender == "Mr." %} src="/static/images/man_profile.png" {% else %} src="/static/images/woman_profile.png" {% endif %}>
+								<br>
+								<h1><center>{{employee.gender}} {{employee.first_name}} {{employee.last_name}}</center></h1>
+								<h2>Employee {{employee.emp_no}}</h2>
+								<br>
+								<p>Birth date: {{employee.birth_date}}</p>
+								<p>Hire date: {{employee.birth_date}}</p>
+								</center>
+				      </div>
+				      <div class="modal-footer">
+								<form action="{{ url_for('edit', empno=employee.emp_no, gender=employee.gender, firstname=employee.first_name, lastname=employee.last_name, bdate=employee.birth_date) }}" method="post">
+								<input type="button" data-dismiss="modal" class="btn btn-danger pull-right" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#delete{{employee.emp_no}}" name="submit" value="Delete"/>
+								<input type="submit" style="margin-right: 5px;" class="btn btn-info pull-right" name="submit" value="Edit profile"/>
+								</form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<!--End of Show Profile Modal -->
 				{% endfor %}
 			</table>
 		</div>
