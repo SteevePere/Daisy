@@ -19,10 +19,10 @@
 
 	<body>
 
-		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" style="background-color: white; border-width: 0px; height:50px;" role="navigation">
+		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" role="navigation">
 			<a href="/" class="navbar-left"><img style="width: 40px; height: 40px; margin: 5px 0px 5px 15px;" src="/static/images/HR.png"></a>
 			<a class="navbar-brand" href="/" style="color: #282828;" >HR DEPARTMENT</a>
-			<a href="/"><img style="float: right; height: 50px; box-shadow: -50px 0 8px 8px white inset;" src="/static/images/emps.png"></a>
+			<a href="/"><img style="float: right; height: 50px; margin-right:10%;" src="/static/images/emps.png"></a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
 		</nav>
 
@@ -149,7 +149,7 @@
 			</table>
 		</div>
 		{% else %}
-		<div style= "background-color: rgb(227, 240, 247, .65); padding: 15px; padding-top: 10px; border-radius: 10px; margin-top: 0px; border: 2px solid white;">
+		<div style= "background-color: rgb(227, 240, 247, .65); padding: 15px; padding-top: 10px; border-radius: 10px; margin-top: 0px;">
 		<h2>{{message}}</h2>
 		</div>
 		{% endif %}
@@ -159,11 +159,11 @@
 <script>
 
 $.fn.dataTable.ext.classes.sLengthSelect = 'btn-sm btn-secondary dropdown-toggle';
-$.fn.dataTable.ext.classes.sPageButtonActive = 'btn-info';
+// $.fn.dataTable.ext.classes.sPageButtonActive = 'btn-info';
 
 $(document).ready(function() {
     $('#list').DataTable( {
-        "dom": '<"top"l>rt<"bottom"fp><"clear">'
+        "dom": '<"top"l>rt<"bottom"ifp><"clear">'
 		} );
 } );
 
