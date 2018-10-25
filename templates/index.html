@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang = "en-US">
 
-	<head>
-		<meta charset = "UTF-8">
-		<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<!-- jQuery library -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<!-- Latest compiled JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<title>Employees</title>
-		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
-	</head>
+<head>
+	<meta charset = "UTF-8">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Datatables -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+	<!-- Title -->
+	<title>HR - Employees</title>
+	<!-- Custom styles -->
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+</head>
 
 	<body>
 
@@ -63,8 +66,9 @@
 		<br>
 
 		{% if not no_match %}
-		<div style= "background-color: rgb(227, 240, 247, .65); padding: 15px; padding-top: 30px; border-radius: 10px; margin-top: 0px;">
-			<table class="table" cellspacing="0" cellpadding="0">
+		<div style= "background-color: rgb(227, 240, 247, .65); padding: 15px; border-radius: 10px; margin-top: 0px;">
+			<table class="table" id="list" cellspacing="0" cellpadding="0">
+			<thead>
 				<tr>
 					<th>Employee Number</th>
 					<th>Title</th>
@@ -74,21 +78,23 @@
 					<th>&nbsp;</th>
 					<th>&nbsp;</th>
 				</tr>
+			</thead>
+			<tbody>
 				{% for employee in employees %}
 				<tr>
 					<td>{{employee.emp_no}}</td>
 					<td>{{employee.gender}}</td>
 					<td>{{employee.first_name}}</td>
 					<td>{{employee.last_name}}</td>
-					<td width="20px">
+					<td width="40px">
 						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#show{{employee.emp_no}}" name="quickview" src="/static/images/quickview.png" style="width:15px; height:15px;" alt="Quick view" title="View Profile"/>
 					</td>
-					<td width="20px">
+					<td width="40px">
 						<form action="{{ url_for('edit', empno=employee.emp_no, gender=employee.gender, firstname=employee.first_name, lastname=employee.last_name, bdate=employee.birth_date) }}" method="post">
 						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" title="Edit Profile"/>
 						</form>
 					</td>
-					<td width="20px">
+					<td width="40px">
 						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#delete{{employee.emp_no}}" name="submit" src="/static/images/exit.png" style="width:15px; height:15px;" alt="Delete" title="Delete Employee"/>
 					</td>
 				</tr>
@@ -139,12 +145,26 @@
 				</div>
 				<!--End of Show Profile Modal -->
 				{% endfor %}
+			</tbody>
 			</table>
 		</div>
 		{% else %}
-		<div style= "background-color: rgb(227, 240, 247, .4); padding: 15px; padding-top: 10px; border-radius: 10px; margin-top: 0px;">
+		<div style= "background-color: rgb(227, 240, 247, .65); padding: 15px; padding-top: 10px; border-radius: 10px; margin-top: 0px; border: 2px solid white;">
 		<h2>{{message}}</h2>
 		</div>
 		{% endif %}
 
 	</body>
+
+<script>
+
+$.fn.dataTable.ext.classes.sLengthSelect = 'btn-sm btn-secondary dropdown-toggle';
+$.fn.dataTable.ext.classes.sPageButtonActive = 'btn-info';
+
+$(document).ready(function() {
+    $('#list').DataTable( {
+        "dom": '<"top"l>rt<"bottom"fp><"clear">'
+		} );
+} );
+
+</script>
