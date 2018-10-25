@@ -58,30 +58,6 @@ def home():
 			return jsonify({'code':200, 'message':'OK', 'Employees':all_employees}),200
 	return render_template('index.html', employees = all_employees),200
 
-@app.route('/search', methods=['GET', 'POST'])
-
-def search():
-	employees = []
-	message = ""
-	search = True
-	no_match = False
-	input = str(request.form.get("search",""))
-	input = '%' + input + '%'
-	cursor.execute("SELECT first_name, last_name, emp_no, gender, birth_date FROM employees WHERE (last_name LIKE (%s) OR first_name LIKE (%s) OR emp_no LIKE (%s) OR birth_date LIKE (%s))",(input, input, input, input))
-	rows = cursor.fetchall()
-	columns = [desc[0] for desc in cursor.description]
-	for row in rows:
-		row = dict(zip(columns,row))
-		if (row["gender"] == "M"):
-			row["gender"] = "Mr."
-		else:
-			(row["gender"]) = "Ms."
-		employees.append(row)
-	if (employees == []):
-		no_match = True
-		message = "No employees match your search!"
-	return render_template('index.html', employees = employees, message = message, search = search, no_match = no_match),200
-
 #ADD ENTRY
 @app.route('/add', methods=['GET', 'POST'])
 

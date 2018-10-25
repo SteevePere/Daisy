@@ -20,9 +20,9 @@
 	<body>
 
 		<nav class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light" role="navigation">
-			<a href="/" class="navbar-left"><img style="width: 40px; height: 40px; margin: 5px 0px 5px 15px;" src="/static/images/HR.png"></a>
-			<a class="navbar-brand" href="/" style="color: #282828;" >HR DEPARTMENT</a>
-			<a href="/"><img style="float: right; height: 50px; margin-right:10%;" src="/static/images/emps.png"></a>
+			<a href="/" class="navbar-left"><img style="width: 50px; height: 50px; margin: 0px 0px 0px 15px;" src="/static/images/HR.png"></a>
+			<a class="navbar-brand" href="/">HR DEPARTMENT</a>
+			<a href="/"><img style="float: right; height: 50px; margin-right:8%;" src="/static/images/emps.png"></a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
 		</nav>
 
@@ -30,42 +30,18 @@
 		<br>
 		<br>
 		<br>
-		{% if search %}
-		<div>
-			<h1>Search results</h1>
-		</div>
-		{% else %}
+
 		<div>
 			<h1>Employees overview</h1>
 		</div>
-		{% endif %}
 
+		<br>
+
+		<a href="/add"><img style="float: right; height: 45px; width: 45px; margin-right: 30px;" title="Add an employee" src="/static/images/add.png" class="pop_image"></a>
 		<br>
 		<br>
 		<br>
 
-		<form action="{{ url_for('search') }}" method="post">
-  		<div class="row">
-    		<div class="col-xs-6 col-md-4" style="float: right; width: 45%;">
-      		<div class="input-group">
-        		<input type="text" required class="form-control" style="border:1px solid white; -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,.0)" placeholder="Search employees" name= "search" id="txtSearch"/>
-        			<div class="input-group-btn">
-          			<button class="btn btn-light" style="background-color: #23272b; color: #fff;" type="submit">
-            			<span class="glyphicon glyphicon-search"></span>
-          			</button>
-								<a class="btn btn-info" style="" href="/add">New employee</a>
-								{% if search %}
-										<a class="btn btn-warning" href="/">All employees</a>
-								{% endif %}
-        			</div>
-      		</div>
-    		</div>
-  		</div>
-		</form>
-
-		<br>
-
-		{% if not no_match %}
 		<div style= "background-color: rgb(227, 240, 247, .65); padding: 15px; border-radius: 10px; margin-top: 0px;">
 			<table class="table" id="list" cellspacing="0" cellpadding="0">
 			<thead>
@@ -87,15 +63,15 @@
 					<td>{{employee.first_name}}</td>
 					<td>{{employee.last_name}}</td>
 					<td width="40px">
-						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#show{{employee.emp_no}}" name="quickview" src="/static/images/quickview.png" style="width:15px; height:15px;" alt="Quick view" title="View Profile"/>
+						<input class="pop_image_small" type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#show{{employee.emp_no}}" name="quickview" src="/static/images/quickview.png" style="width:15px; height:15px;" alt="Quick view" title="View Profile"/>
 					</td>
 					<td width="40px">
 						<form action="{{ url_for('edit', empno=employee.emp_no, gender=employee.gender, firstname=employee.first_name, lastname=employee.last_name, bdate=employee.birth_date) }}" method="post">
-						<input type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" title="Edit Profile"/>
+						<input class="pop_image_small" type="image" name="submit" src="/static/images/edit.png" style="width:15px; height:15px;" alt="Edit" title="Edit Profile"/>
 						</form>
 					</td>
 					<td width="40px">
-						<input type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#delete{{employee.emp_no}}" name="submit" src="/static/images/exit.png" style="width:15px; height:15px;" alt="Delete" title="Delete Employee"/>
+						<input class="pop_image_small" type="image" data-toggle="modal" data-id="{{employee.emp_no}}" data-target="#delete{{employee.emp_no}}" name="submit" src="/static/images/exit.png" style="width:15px; height:15px;" alt="Delete" title="Delete Employee"/>
 					</td>
 				</tr>
 				<!--Delete confirmation Modal -->
@@ -148,22 +124,22 @@
 			</tbody>
 			</table>
 		</div>
-		{% else %}
-		<div style= "background-color: rgb(227, 240, 247, .65); padding: 15px; padding-top: 10px; border-radius: 10px; margin-top: 0px;">
-		<h2>{{message}}</h2>
-		</div>
-		{% endif %}
 
 	</body>
 
 <script>
 
 $.fn.dataTable.ext.classes.sLengthSelect = 'btn-sm btn-secondary dropdown-toggle';
-// $.fn.dataTable.ext.classes.sPageButtonActive = 'btn-info';
+$.fn.dataTable.ext.classes.sFilterInput = 'form-control input-sm';
+$('#tablebalanceBTC_filter input[type="search"]').attr('placeholder', 'Table search');
 
 $(document).ready(function() {
     $('#list').DataTable( {
-        "dom": '<"top"l>rt<"bottom"ifp><"clear">'
+        "dom": '<"top"fl>rt<"bottom"ip><"clear">',
+				language: {
+					search: "",
+					searchPlaceholder: "Search employees"
+				},
 		} );
 } );
 

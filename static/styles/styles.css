@@ -11,9 +11,9 @@ body {
 }
 
 h1 {
-	 color: #383737;
- text-align: left;
- font-size: 250%;
+	color: #333;
+	text-align: left;
+	font-size: 30px;
 }
 
 h2 {
@@ -22,14 +22,26 @@ h2 {
  font-size: 150%;
 }
 
+.pop_image:hover {
+	transform: scale(1.1, 1.1);
+}
+
+.pop_image_small:hover {
+	transform: scale(1.3, 1.3);
+}
+
 .navbar-inverse {
-	background: linear-gradient(45deg, #5BC0DE 0%, rgba(255,255,255,1) 25%);
+	background: linear-gradient(45deg, #2AB4DC 0%, rgba(255,255,255,1) 30%);
 	border-width: 0px;
 	height:50px;"
 }
 
-a:hover.navbar-brand {
-	color: grey!important;
+.navbar-brand {
+	color: #fff!important;
+}
+
+.btn-info {
+	background-color: #2AB4DC;
 }
 
 .btn-sm {
@@ -52,8 +64,8 @@ a:hover.navbar-brand {
 table.dataTable tbody tr {
   background-color: transparent!important; }
 
-.dataTables_filter {
-	display:none!important;
+.dataTables_wrapper .dataTables_filter label {
+	font-color:white;
 }
 
 .dataTables_length {
@@ -103,7 +115,12 @@ table.dataTable thead .sorting {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-	background: #5BC0DE!important;
+	background: #2AB4DC!important;
+	color: white!important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+	color: white!important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -125,4 +142,8 @@ table.dataTable tbody tr:nth-of-type(odd) {
 .modal-header {
     padding: 15px;
     border-bottom: 0px solid #e5e5e5;
+}
+
+.modal-open {
+	padding-right: 0px !important;
 }
