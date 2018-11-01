@@ -22,6 +22,14 @@ h2 {
  font-size: 150%;
 }
 
+.forms {
+	background-color: rgb(227, 240, 247, .4);
+	padding: 15px;
+	padding-top: 30px;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+
 .pop_image:hover {
 	transform: scale(1.1, 1.1);
 }
@@ -31,7 +39,7 @@ h2 {
 }
 
 .navbar-inverse {
-	background: linear-gradient(45deg, #2AB4DC 0%, rgba(255,255,255,1) 27%);
+	background: linear-gradient(45deg, #5FB9EE 0%, rgba(255,255,255,1) 27%);
 	border-width: 0px;
 	height:50px;"
 }

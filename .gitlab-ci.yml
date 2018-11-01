@@ -1,0 +1,27 @@
+image: "python:latest"
+
+stages:
+  - lint
+  - test
+  - security
+
+lint:
+  stage: lint
+  script:
+  - pip install flask
+  - pip install flask-mysql
+  - pip install flask_wtf
+  - pip install flask-bootstrap
+  - pip install pylint
+  - pylint app.py
+
+test:
+  stage: test
+  script:
+    - python -m unittest discover tests
+
+security test:
+  stage: security
+  script:
+    - pip install bandit
+    - bandit app.py
