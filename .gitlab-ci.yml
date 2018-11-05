@@ -1,27 +1,78 @@
-image: "python:latest"
+# # building custom images
+#
+# variables:
+#   REGISTRY: 192.168.34.25:5002
+#
+# stages:
+#   - pre-build
+#
+#
+# build:
+#   image: docker:latest
+#   stage: pre-build
+#   services:
+#   - name: docker:dind
+#     command: ["--insecure-registry", "192.168.34.25:5002"]
+#   script:
+#     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY
+#     - docker build -t $REGISTRY/daisy/daisy/prod_db .
+#     - docker push $REGISTRY/daisy/daisy/prod_db
+
+# -------------------------------------------------------------
+
+# using custom image
+
+variables:
+  REGISTRY: 192.168.34.25:5002
+
+image: $REGISTRY/daisy/daisy:latest
 
 stages:
   - lint
   - test
-  - security
+  - check security
+  - build
+  - deploy
 
-lint:
+linting:
   stage: lint
   script:
-  - pip install flask
-  - pip install flask-mysql
-  - pip install flask_wtf
-  - pip install flask-bootstrap
-  - pip install pylint
-  - pylint app.py
+    - pip install pylint
+    - pylint app/app.py
 
-test:
+unit testing:
   stage: test
+  services:
+    - mysql:5.7
+  variables:
+    MYSQL_DATABASE: Daisy
+    MYSQL_ROOT_PASSWORD: Makaveli
   script:
-    - python -m unittest discover tests
+    - apt-get -y update
+    - apt-get -y upgrade
+    - apt-get -y install mysql-client
+    - mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=mysql Daisy < app/data/employees.sql
+    - python app/test_one.py
 
-security test:
-  stage: security
+security testing:
+  stage: check security
   script:
     - pip install bandit
-    - bandit app.py
+    - bandit app/app.py
+
+building:
+  image: docker:latest
+  stage: build
+  services:
+  - name: docker:dind
+    command: ["--insecure-registry", "192.168.34.25:5002"]
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY
+    - docker build -t $REGISTRY/daisy/daisy/prod .
+    - docker push $REGISTRY/daisy/daisy/prod
+
+deploying:
+  stage: deploy
+  script:
+    # - export DOCKER_HOST=tcp://192.0.0.0
+    # https://msdalp.github.io/2018/06/20/Gitlab-CI-Auto-Deployment-to-Remote-Server/

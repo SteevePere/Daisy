@@ -30,7 +30,7 @@ bootstrap = Bootstrap(app)
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'Makaveli'
 app.config['MYSQL_DATABASE_DB'] = 'Daisy'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_HOST'] = 'mysql'
 app.config['SECRET_KEY'] = 'top secret key'
 mysql.init_app(app)
 
@@ -137,3 +137,6 @@ def modify(empno):
 
 def not_found(error):
 	return jsonify({'code':404,'message': 'Not Found'}),404
+
+if __name__ == "__main__": # nosec
+    app.run(host='0.0.0.0', port=5001) # nosec
