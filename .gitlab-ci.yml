@@ -1,11 +1,10 @@
-# # building custom images
+# # to build custom images
 #
 # variables:
 #   REGISTRY: 192.168.34.25:5002
 #
 # stages:
 #   - pre-build
-#
 #
 # build:
 #   image: docker:latest
@@ -20,13 +19,13 @@
 
 # -------------------------------------------------------------
 
-# using custom image
-
 variables:
+  MY_TOKEN: CwrBSsUcVFKfEYz-mtyx
   REGISTRY: 192.168.34.25:5002
+  SSH_PROD: ssh root@192.168.34.29
 
 image: $REGISTRY/daisy/daisy:latest
-
+#
 stages:
   - lint
   - test
@@ -61,18 +60,29 @@ security testing:
     - bandit app/app.py
 
 building:
-  image: docker:latest
   stage: build
   services:
   - name: docker:dind
     command: ["--insecure-registry", "192.168.34.25:5002"]
   script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY
+    - docker login -u root -p $MY_TOKEN $REGISTRY
     - docker build -t $REGISTRY/daisy/daisy/prod .
     - docker push $REGISTRY/daisy/daisy/prod
 
-deploying:
+deploying to production:
+  only:
+    - master
+  image: debian:latest
   stage: deploy
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$MY_SSH_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    # - export DOCKER_HOST=tcp://192.0.0.0
-    # https://msdalp.github.io/2018/06/20/Gitlab-CI-Auto-Deployment-to-Remote-Server/
+    - $SSH_PROD docker rm --force app
+    - $SSH_PROD docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY
+    - $SSH_PROD docker pull $REGISTRY/daisy/daisy/prod:latest
+    - $SSH_PROD docker run --name app --link mysql:mysql -d -p 5001:5001 $REGISTRY/daisy/daisy/prod:latest
+    - $SSH_PROD docker logout $REGISTRY
